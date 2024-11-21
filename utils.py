@@ -14,8 +14,6 @@ class Book:
         self.page = requests.get(self.product_page_url)
         self.soup = BeautifulSoup(self.page.content, "html.parser")
         self.category = category_name
-
-        # Initialize attributes using helper methods
         self.title = self.scrape_title()
         self.universal_product_code = self.scrape_table("UPC")
         self.price_including_tax = self.scrape_table("Price (incl. tax)")
@@ -32,8 +30,8 @@ class Book:
     def scrape_table(self, product_item):
         rows = self.soup.find_all("tr")
         for row in rows:
-            key = row.find("th").string  # Extract text from <th>
-            value = row.find("td").string  # Extract text from <td>
+            key = row.find("th").string
+            value = row.find("td").string
             if key == product_item:
                 return value
         return "Not available"
