@@ -42,12 +42,13 @@ class Player:
         self.birthday = birthday
         self.national_player_number = national_player_number
         self.score = score
+        self.opponents = []
 
     def __repr__(self) -> str:
-        return (f"[yellow]{self.national_player_number: <12}[/yellow]"
-                f"[green]{self.name: <15}{self.first_name: <15}[/green]"
-                f"[blue]{self.birthday: <12}[/blue]"
-                f"[#77DFFE] {self.score: <6}[/#77DFFE]")
+        return (f"{self.national_player_number: <12}"
+                f"{self.name: <15}{self.first_name: <15}"
+                f"{self.birthday: <12}"
+                f"{self.score: <6}")
 
 
 class Tournament:
@@ -137,7 +138,7 @@ class Tournament:
         :raises FileNotFoundError: If the directory
         `data/tournaments/` does not exist.
         """
-        json_file = f"data/tournaments/{self.name}.json"
+        json_file = f"{TOURNAMENT_FILE_PATH}{self.name}.json"
         DataBase.check_existence_json_file(json_file)
 
         player_data = []
@@ -154,31 +155,28 @@ class Tournament:
         rounds_data = []
         for played_round in self.rounds:
             match_data = []
-            for match in played_round.matchs:
-                match_data.append(
-                    {"match_number": match.number,
-                     "player1":
-                         {"national_player_number":
-                          match.player1.national_player_number,
-                          "name": match.player1.name,
-                          "first_name": match.player1.first_name,
-                          "birthday": match.player1.birthday,
-                          "score": match.player1.score
-                          },
-                     "player2":
-                         {"national_player_number":
-                          match.player2.national_player_number,
-                          "name": match.player2.name,
-                          "first_name": match.player2.first_name,
-                          "birthday": match.player2.birthday,
-                          "score": match.player2.score},
-                     "result":
-                         [("Payer1", match.result[0][1]),
-                          ("Player2", match.result[1][1])
-                          ]
-                     }
-                )
-
+            for match in played_round.matches:
+                data = {
+                    "match_number": match.number,
+                    "player1": {
+                        "national_player_number": match.player1.national_player_number,  # noqa: E501
+                        "name": match.player1.name,
+                        "first_name": match.player1.first_name,
+                        "birthday": match.player1.birthday,
+                        "score": match.player1.score
+                    },
+                    "player2": {
+                        "national_player_number": match.player2.national_player_number,  # noqa: E501
+                        "name": match.player2.name,
+                        "first_name": match.player2.first_name,
+                        "birthday": match.player2.birthday,
+                        "score": match.player2.score},
+                    "result":
+                        [("Payer1", match.result[0][1]),
+                         ("Player2", match.result[1][1])
+                         ]
+                }
+                match_data.append(data)
             round_data = {
                 "name": played_round.name,
                 "round_number": played_round.round_number,
@@ -212,8 +210,8 @@ class Tournament:
         Loads a tournament's data into the current instance.
 
         This method initializes the tournament object with
-        data loaded from a serialized
-        source. It recreates the players, rounds, and matches.
+        data loaded from a serialized source.
+        It recreates the players, rounds, and matches.
 
         :param loaded_tournament: The serialized tournament data to load.
         :type loaded_tournament: dict
@@ -256,24 +254,22 @@ class Tournament:
                     data["birthday"],
                     data["score"]
                 )
+                player1.opponents.append(player2.national_player_number)
+                player2.opponents.append(player1.national_player_number)
                 match = Match(
                     played_match["match_number"],
                     (player1, player2)
                 )
                 if played_match["result"][0][1] == 1:
-                    match.result = \
-                        [(player1, 1), (player2, 0)]
+                    match.result = [(player1, 1), (player2, 0)]
                 elif played_match["result"][1][1] == 1:
-                    match.result = \
-                        [(player1, 0), (player2, 1)]
+                    match.result = [(player1, 0), (player2, 1)]
                 elif played_match["result"][1][1] == 0.5:
-                    match.result = \
-                        [(player1, 0.5), (player2, 0.5)]
+                    match.result = [(player1, 0.5), (player2, 0.5)]
                 else:
-                    match.result = \
-                        [(player1, 0), (player2, 0)]
+                    match.result = [(player1, 0), (player2, 0)]
 
-                self.rounds[-1].matchs.append(match)
+                self.rounds[-1].matches.append(match)
 
 
 class Round:
@@ -303,78 +299,89 @@ class Round:
                 key=lambda player: player.score,
                 reverse=True
             )
-        self.matchs = []
+        self.matches = []
 
-    def add_match(self, rounds):
+    def add_match(self):
         """
         Adds matches to the current round based on available players.
 
         The method pairs players who have not yet played against each other in
         previous rounds. Each match is assigned a unique match number.
-        :parameter rounds : list of the previous round
-        :type rounds : list[Round]
         :return: A list of `Match` objects representing the matches for
             the round.
         :rtype: list[Match]
         """
-        already_tried_matchs = []
-
+        attempt = 0
         while True:
-            self.matchs = []
             used_players = set()
             match_number = 1
+
             for i, player1 in enumerate(self.players):
+
                 if player1 in used_players:
                     continue
 
                 for j in range(i + 1, len(self.players)):
                     player2 = self.players[j]
-                    if player2 in used_players:
+
+                    if (player2 in used_players or
+                            player2.national_player_number in
+                            player1.opponents):
                         continue
 
                     match = Match(match_number, (player1, player2))
+                    self.matches.append(match)
+                    match_number += 1
 
-                    already_played = False
-                    for previous_round in rounds:
-                        for previous_match in previous_round.matchs:
-                            if ((match.player1,
-                                 match.player2) ==
-                                    (previous_match.player1,
-                                     previous_match.player2)
-                                    or (match.player2,
-                                        match.player1) ==
-                                    (previous_match.player1,
-                                     previous_match.player2)):
-                                already_played = True
-                                break
+                    player1.opponents.append(player2.national_player_number)
+                    player2.opponents.append(player1.national_player_number)
+                    used_players.add(player1)
+                    used_players.add(player2)
 
-                    for already_tried_match in already_tried_matchs:
-                        if ((match.player1,
-                             match.player2) ==
-                                (already_tried_match.player1,
-                                 already_tried_match.player2)
-                                or (match.player2, match.player1) ==
-                                (already_tried_match.player1,
-                                 already_tried_match.player2)):
-                            already_played = True
-                            break
+                    break
 
-                    if not already_played:
-                        self.matchs.append(match)
-                        match_number += 1
-                        used_players.add(player1)
-                        used_players.add(player2)
-                        break
-                    if match in already_tried_matchs:
-                        continue
-
-            if len(self.matchs) != len(self.players) / 2:
-                already_tried_matchs = self.matchs
-                self.players = DataBase().sort_players(
-                    self.players,
-                    "score"
-                )
-                continue
+            if len(self.matches) != len(self.players) / 2:
+                attempt += 1
+                for match in self.matches:
+                    del match.player1.opponents[-1]
+                    del match.player2.opponents[-1]
+                self.matches = []
+                if attempt == 1:
+                    print(attempt, "resorted")
+                    input("")
+                    self.players = DataBase().sort_players(
+                        self.players,
+                        "score"
+                    )
+                    continue
+                elif attempt == 2:
+                    print(attempt, "resorted")
+                    input("")
+                    self.players = DataBase().sort_players(
+                        self.players,
+                        "name"
+                    )
+                elif attempt == 3:
+                    print(attempt, "resorted")
+                    input("")
+                    self.players = DataBase().sort_players(
+                        self.players,
+                        "name", False
+                    )
+                elif attempt == 4:
+                    print(attempt, "resorted")
+                    input("")
+                    self.players = DataBase().sort_players(
+                        self.players,
+                        "national_player_number", False
+                    )
+                elif attempt == 5:
+                    print(attempt, "resorted")
+                    input("")
+                    self.players = DataBase().sort_players(
+                        self.players,
+                        "national_player_number", True
+                    )
             else:
                 break
         return
@@ -580,7 +587,7 @@ class DataBase:
         :return: Sorted list of player instances.
         :rtype: List[Player]
         """
-        sort_functions = {
+        sort_keys = {
             "name":
                 lambda player: player.name,
             "national_player_number":
@@ -589,9 +596,9 @@ class DataBase:
                 lambda player: player.score
         }
 
-        if criterion not in sort_functions:
+        if criterion not in sort_keys:
             raise ValueError(
                 "Critère invalide. Utilisez 'name',"
                 "'national_player_number' ou 'score'.")
 
-        return sorted(players, key=sort_functions[criterion], reverse=reverse)
+        return sorted(players, key=sort_keys[criterion], reverse=reverse)
