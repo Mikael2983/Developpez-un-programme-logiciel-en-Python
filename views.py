@@ -767,7 +767,6 @@ class DataBaseView:
                 f"liste des matchs du tour "
                 f"{tournament.rounds[i].round_number}"
             )
-
         input("")
 
 
