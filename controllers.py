@@ -86,66 +86,42 @@ class MainController:
                     self.tournament_view.display_confirm_tournament_loaded()
                     self.run_tournament(tournament)
 
-            elif option == "3":
+            elif option == "3":  # Return
                 break
-            else:  # Return
+            else:
                 continue
 
     def run_tournament(self, tournament):
         """
-        Runs the main logic for a tournament instance.
+        Executes the tournament process, including registering players and
+        running the rounds.
 
-        This method handles the lifecycle of a tournament, from player
-        registration to match results validation, rounds progression, and
-        tournament completion. It ensures that a valid number of players are
-        registered, manages rounds, and saves the tournament's state upon
-        completion.
-
-        :param tournament: The tournament instance to run.
+        :param tournament: The tournament object containing details about
+                            players, rounds, matches, and the tournament's
+                            current state.
         :type tournament: Tournament
         """
-
+        # add players
         while True:
-            # allow to pass this section if tournament is reloaded
-            if len(tournament.rounds) != 0:
+            players_boarding_over = (
+                self.register_players_to_tournament(tournament))
+            # run rounds
+            if players_boarding_over:
+                self.run_rounds_tournament(tournament)
+                break
+            else:
                 break
 
-            self.application_view.clear_console()
-            TournamentView.display_add_player_message()
-            if len(tournament.players) != 0:
-                self.data_base_view.display_players_list(
-                    tournament.players,
-                    "Liste des joueurs inscrits")
+    def run_rounds_tournament(self, tournament):
+        """
+        Manages the execution of rounds within a tournament. Adds rounds,
+        processes match results, and handles the conclusion of the tournament.
 
-                self.tournament_view.display_menu_add_player()
-                option = self.application_view.choose_option()
-                if option == "2":  # start the first round
-                    if len(tournament.players) % 2 != 0:
-                        (self.tournament_view.display_wrong_players_number_message())  # noqa: E501
-                        continue
-                    elif len(tournament.players) < int(
-                            tournament.max_round) + 1:
-                        self.tournament_view.display_too_low_player_number_warning()  # noqa: E501
-                        continue
-                    elif len(tournament.players) < 2 * int(
-                            tournament.max_round):
-                        option = (
-                            self.tournament_view.display_low_player_number_warning())  # noqa: E501
-                        if option == "1":
-                            break
-                        else:
-                            continue
-                    else:
-                        break
-                else:
-                    self.application_view.clear_console()
-                    TournamentView.display_add_player_message()
-                    self.data_base_view.display_players_list(
-                        tournament.players,
-                        "Liste des joueurs participants")
-                    self.add_player_to_tournament(tournament)
-            else:
-                self.add_player_to_tournament(tournament)
+        :param tournament: The tournament object containing details about
+                            players, rounds, matches, and the tournament's
+                            current state.
+        :type tournament: Tournament
+        """
 
         while True:
 
@@ -176,13 +152,77 @@ class MainController:
             self.tournament_view.display_menu_assign_result()
 
             option = self.application_view.choose_option()
-            if option == "1":
+            if option == "1":  # Enter the results of matches
                 self.validate_results(tournament)
-            elif option == "2":
+            elif option == "2":  # return
                 tournament.save()
                 break
             else:
                 continue
+
+    def register_players_to_tournament(self, tournament):
+        """
+        Manages the registration of players to a tournament. Ensures that the
+        player list meets the required criteria before the tournament starts.
+
+        :param tournament: The tournament instance where players will be
+                            registered.
+        :type tournament: Tournament
+        :return: A boolean indicating whether player registration is complete
+                 and the tournament is ready to start.
+        :rtype: bool
+        :raises ValueError: If the number of players is insufficient or invalid
+                            for the tournament.
+        """
+        while True:
+            #  pass this section if tournament is reloaded and round started
+            if len(tournament.rounds) != 0:
+                return True
+
+            self.application_view.clear_console()
+            TournamentView.display_add_player_message()
+            if len(tournament.players) != 0:
+                self.data_base_view.display_players_list(
+                    tournament.players,
+                    "Liste des joueurs inscrits")
+
+                self.tournament_view.display_menu_add_player()
+                option = self.application_view.choose_option()
+                if option == "2":  # start the first round
+                    if len(tournament.players) % 2 != 0:
+                        (self.tournament_view.display_wrong_players_number_message())  # noqa: E501
+                        continue
+                    elif len(tournament.players) < int(
+                            tournament.max_round) + 1:
+                        self.tournament_view.display_too_low_player_number_warning()  # noqa: E501
+                        continue
+                    elif len(tournament.players) < 2 * int(
+                            tournament.max_round):
+                        option = (
+                            self.tournament_view.display_low_player_number_warning())  # noqa: E501
+                        if option == "1":  # start round despite the warning
+
+                            return True
+                        else:
+                            continue
+                    else:
+                        return True
+
+                elif option == "1":  # add players
+                    self.application_view.clear_console()
+                    TournamentView.display_add_player_message()
+                    self.data_base_view.display_players_list(
+                        tournament.players,
+                        "Liste des joueurs participants")
+                    self.add_player_to_tournament(tournament)
+                    tournament.save()
+                else:  # return
+
+                    return False
+
+            else:
+                self.add_player_to_tournament(tournament)
+                tournament.save()
 
     def add_player_to_tournament(self, tournament):
         """
@@ -258,7 +298,8 @@ class MainController:
                 tournament.rounds[-1],
                 match_without_result)
             )
-            if match_number != '':
+            if (match_number.isdigit() and
+                    int(match_number) <= len(tournament.rounds[-1].matches)):
                 match = tournament.rounds[-1].matches[int(match_number) - 1]
                 TournamentView.display_assign_match_result(match)
                 result = self.application_view.choose_option()
@@ -268,9 +309,8 @@ class MainController:
                     match.result = match.assign_result(match.player2)
                 elif result == "3":
                     match.result = match.assign_result()
-
             else:
-                continue
+                break
 
 
 class ReloadDataBase:
@@ -391,7 +431,7 @@ class ReloadDataBase:
                     self.application_view.break_point()
 
             elif option == "2":  # Tournois enregistrés
-                loaded_tournament = self.reload_tournament("ended")
+                loaded_tournament = self.reload_tournament()
 
                 if loaded_tournament:
                     tournament = Tournament(

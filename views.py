@@ -99,7 +99,9 @@ class TournamentView:
     def display_menu_add_player():
         """Asks if there are other players to register"""
         request = "Sélectionnez une option :"
-        text = ["1- Ajouter des joueurs", "2- Commencer le 1er Tour"]
+        text = ["1- Ajouter des joueurs",
+                "2- Commencer le 1er Tour",
+                "3- Retour"]
         display_styled_menu(None, request, text)
 
     @staticmethod
@@ -278,7 +280,7 @@ class TournamentView:
     def display_low_player_number_warning(self):
         print(apply_rich_style(
             "le nombre de joueur inscrits ne garantit pas la génération des "
-            "paires pour les matchs uniquement en fonction des scores des "
+            "paires pour les matchs \2 uniquement en fonction des scores des "
             "joueurs puisse être respecté", ERROR_STYLE))
         requests = "voulez commencer le tournoi?"
         text = ["1- Oui.", "2- Non"]
@@ -683,13 +685,13 @@ class DataBaseView:
 
             :param tournaments: A list of dictionaries representing
                                 tournaments.
-             Each dictionary should have the keys:
-                    - 'name',
-                    - 'place',
-                    - 'start_date',
-                    - 'max_round',
-                    - 'round_number',
-                    - 'description'.
+            Each dictionary should have the keys:
+                - 'name',
+                - 'place',
+                - 'start_date',
+                - 'max_round',
+                - 'round_number',
+                - 'description'.
             :type tournaments: list[dict]
             :return: The user-selected tournament index as a string.
             :rtype: str
@@ -753,7 +755,7 @@ class DataBaseView:
                     REQUEST_STYLE
                 ),
                 apply_rich_style(
-                    f"{tournament.start_date}",
+                    f"{tournament.start_date.strftime("%d-%m-%Y")}",
                     REQUEST_STYLE
                 )]
         print(apply_rich_style(
@@ -785,12 +787,29 @@ class DataBaseView:
 
         for i in range(len(tournament.rounds)):
 
+            print("\n")
             self.display_matches(
                 tournament.rounds[i].matches,
                 f"liste des matchs du tour "
                 f"{tournament.rounds[i].round_number}"
             )
+            start_time = apply_rich_style(
+                f"{tournament.rounds[i].start_time.strftime("%H:%M")}",
+                REQUEST_STYLE)
 
+            if tournament.rounds[i].end_time:
+                end_time = apply_rich_style(
+                    f"{tournament.rounds[i].end_time.strftime("%H:%M")}",
+                    REQUEST_STYLE)
+                end_sentence = f" et c'est achevé à {end_time}."
+            else:
+                end_sentence = " et n'est pas terminé"
+
+            print(apply_rich_style(f"Ce tour a commencé à {start_time}"
+                                   f"{end_sentence}",
+                                   TEXT_STYLE
+                                   )
+                  )
         input("")
 
 

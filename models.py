@@ -184,8 +184,8 @@ class Tournament:
             round_data = {
                 "name": played_round.name,
                 "round_number": played_round.round_number,
-                "end_time": played_round.end_time,
                 "start_time": played_round.start_time,
+                "end_time": played_round.end_time,
                 "matches": match_data
             }
             rounds_data.append(round_data)
@@ -222,10 +222,16 @@ class Tournament:
         :type loaded_tournament: dict
         """
 
-        self.start_date = loaded_tournament["start_date"]
-        self.end_date = loaded_tournament["end_date"]
+        self.start_date = datetime.strptime(
+            loaded_tournament["start_date"], "%d-%m-%Y %H:%M")
+        if loaded_tournament["end_date"]:
+            self.end_date = datetime.strptime(
+                loaded_tournament["end_date"], "%d-%m-%Y %H:%M")
+        else:
+            self.end_date = False
         self.round_number = loaded_tournament["round_number"]
         self.max_round = loaded_tournament["max_round"]
+        self.description = loaded_tournament["description"]
 
         for player in loaded_tournament["players"]:
             self.players.append(
@@ -243,8 +249,14 @@ class Tournament:
                 self.players
             )
             )
-            self.rounds[-1].start_time = loaded_round["start-time"]
-            self.rounds[-1].end_time = loaded_round["end_time"]
+            self.rounds[-1].start_time = datetime.strptime(
+                loaded_round["start_time"], "%d-%m-%Y %H:%M")
+
+            if loaded_round["end_time"]:
+                self.rounds[-1].end_time = datetime.strptime(
+                    loaded_round["end_time"], "%d-%m-%Y %H:%M")
+            else:
+                self.rounds[-1].end_time = False
 
             for played_match in loaded_round['matches']:
 
