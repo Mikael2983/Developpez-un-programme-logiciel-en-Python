@@ -140,9 +140,9 @@ class TournamentView:
                 "4- Retour."]
         display_styled_menu(None, request, text)
 
-    def display_validate_result_menu(self,
-                                     current_round: Round,
-                                     match_without_score: int) \
+    def display_select_results_menu(self,
+                                    current_round: Round,
+                                    match_without_score: int) \
             -> str:
         """
         Displays a menu for selecting a match to record its result.
@@ -228,17 +228,14 @@ class TournamentView:
             "Le tournoi est terminé",
             SUCCESS_STYLE
         ))
-        print(apply_rich_style(
-            "Voici le classement final",
-            TEXT_STYLE
-        ))
+
         self.data_base_view.display_players_score(
             self.data_base.sort_players(
                 tournament.players,
                 "score",
                 True
             ),
-            "liste des joueurs classée par score"
+            "Voici le classement final"
         )
         print(apply_rich_style(
             "voici le détail des tours joués",
@@ -248,6 +245,14 @@ class TournamentView:
 
     @staticmethod
     def display_menu_assign_result():
+        """
+        Displays the menu for assigning match results.
+
+        This menu offers the following options:
+        - 1: Record the results of the matches.
+        - 2: Return to the previous menu.
+
+        """
         request = "Que voulez faire?"
         text = ["1- renseigner les résultats des matchs",
                 "2- retour"
@@ -257,10 +262,33 @@ class TournamentView:
     @staticmethod
     def display_matches_creation_error_message():
         print(apply_rich_style(
-            "la création automatique des matchs a échoué",
+            "la création automatique des matchs a échoué,"
+            "le tournoi ne peut pas continuer",
             ERROR_STYLE
         ))
     input()
+
+    @staticmethod
+    def display_too_low_player_number_warning():
+        print(apply_rich_style(
+            "attention le nombre de joueur inscrits ne permet pas de "
+            "réaliser la condition de non duplicité des rencontres",
+            ERROR_STYLE))
+
+    def display_low_player_number_warning(self):
+        print(apply_rich_style(
+            "le nombre de joueur inscrits ne garantit pas la génération des "
+            "paires pour les matchs uniquement en fonction des scores des joueurs"
+            "puisse être respecté", ERROR_STYLE))
+        requests = "voulez commencer le tournoi?"
+        text = ["1- Oui.", "2- Non"]
+        display_styled_menu(None, requests, text)
+        return self.application_view.choose_option()
+
+
+
+
+
 
 
 class DataBaseView:
@@ -773,7 +801,7 @@ class DataBaseView:
 
 class ApplicationView:
     @staticmethod
-    def display_menu():
+    def display_home_menu():
         """welcome menu"""
         header = "Bienvenue dans votre outil de gestion de tournoi"
         request = "Que souhaitez vous faire?"

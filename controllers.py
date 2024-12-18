@@ -69,6 +69,7 @@ class MainController:
                                         data["description"],
                                         int(data["max_round_number"])
                                         )
+                tournament.save()
                 self.tournament_view.display_confirm_tournament_creation()
                 self.run_tournament(tournament)
 
@@ -117,10 +118,22 @@ class MainController:
 
                 self.tournament_view.display_menu_add_player()
                 option = self.application_view.choose_option()
-                if option == "2":  # start the fisrt round
+                if option == "2":  # start the first round
                     if len(tournament.players) % 2 != 0:
-                        TournamentView.display_wrong_players_number_message()
+                        self.tournament_view.display_wrong_players_number_message()
                         continue
+                    elif len(tournament.players) < int(
+                            tournament.max_round) + 1:
+                        self.tournament_view.display_too_low_player_number_warning()
+                        continue
+                    elif len(tournament.players) < 2 * int(
+                            tournament.max_round):
+                        option = (
+                            self.tournament_view.display_low_player_number_warning())
+                        if option == "1":
+                            break
+                        else:
+                            continue
                     else:
                         break
                 else:
@@ -133,19 +146,42 @@ class MainController:
             else:
                 self.add_player_to_tournament(tournament)
 
-        while tournament.round_number <= tournament.max_round:
-            if (len(tournament.rounds) == 0
-                    or tournament.rounds[-1].ended is True):
-                self.add_round_to_tournament(tournament)
+        while True:
+
+            if tournament.round_number != tournament.max_round:
+                if (len(tournament.rounds) == 0
+                        or tournament.rounds[-1].end_time):
+
+                    self.add_round_to_tournament(tournament)
+                    tournament.save()
+
+                    if (len(tournament.rounds[-1].matches) !=
+                            len(tournament.players) / 2):
+                        self.tournament_view.display_matches_creation_error_message()
+                        tournament.ended()
+                        self.tournament_view.display_tournament_ended(
+                            tournament)
+                        break
+
+            elif tournament.rounds[-1].end_time:
+
+                tournament.ended()
+                tournament.save()
+                self.tournament_view.display_tournament_ended(tournament)
+                break
 
             self.application_view.clear_console()
             self.tournament_view.display_match_menu(tournament.rounds[-1])
-            self.validate_results(tournament)
+            self.tournament_view.display_menu_assign_result()
 
-        # del tournament.rounds[-1]
-        tournament.ended()
-        tournament.save()
-        self.tournament_view.display_tournament_ended(tournament)
+            option = self.application_view.choose_option()
+            if option == "1":
+                self.validate_results(tournament)
+            elif option == "2":
+                tournament.save()
+                break
+            else:
+                continue
 
     def add_player_to_tournament(self, tournament):
         """
@@ -184,7 +220,7 @@ class MainController:
         :type tournament: Tournament
         """
         tournament.add_round()
-        tournament.rounds[-1].add_match(tournament.rounds)
+        tournament.rounds[-1].add_match()
 
     def validate_results(self, tournament: Tournament):
         """
@@ -197,23 +233,24 @@ class MainController:
         :type tournament: Tournament
 
         """
-        while not tournament.rounds[-1].ended:
+        while not tournament.rounds[-1].end_time:
+            tournament.save()
             self.application_view.clear_console()
             match_without_result = 0
 
-            for match in tournament.rounds[-1].matchs:
+            for match in tournament.rounds[-1].matches:
                 if match.result == [(match.player1, 0), (match.player2, 0)]:
                     match_without_result += 1
 
             if match_without_result == 0:
-                self.data_base_view.display_matchs(
-                    tournament.rounds[-1].matchs,
+                self.data_base_view.display_matches(
+                    tournament.rounds[-1].matches,
                     "liste des matchs"
                 )
                 TournamentView.display_valid_result()
                 option = self.application_view.choose_option()
                 if option == "1":  # the user validates the results
-                    tournament.rounds[-1].ended = True
+                    tournament.rounds[-1].ended()
                     break
 
             match_number = (self.tournament_view.display_select_results_menu(
@@ -221,7 +258,7 @@ class MainController:
                 match_without_result)
             )
             if match_number != '':
-                match = tournament.rounds[-1].matchs[int(match_number) - 1]
+                match = tournament.rounds[-1].matches[int(match_number) - 1]
                 TournamentView.display_assign_match_result(match)
                 result = self.application_view.choose_option()
                 if result == "1":
@@ -230,6 +267,7 @@ class MainController:
                     match.result = match.assign_result(match.player2)
                 elif result == "3":
                     match.result = match.assign_result()
+
             else:
                 continue
 
@@ -325,18 +363,18 @@ class ReloadDataBase:
             self.application_view.clear_console()
             self.data_base_view.display_menu_saved_data()
             option = self.application_view.choose_option()
-            
+
             if option == "1":  # Joueurs enregistrés
                 json_file = PLAYERS_FILE_PATH
                 DataBase.check_existence_json_file(json_file)
-                
+
                 with (open(json_file, "r", encoding="utf-8") as file):
                     players_data = json.load(file)
                     players = [Player(**data) for data in players_data]
                     self.application_view.clear_console()
                     self.data_base_view.display_menu_registered_players()
                     option = self.application_view.choose_option()
-                    
+
                     if option == "1":  # sorted by national player number
                         sorted_players = self.data_base.sort_players(
                             players,
@@ -352,10 +390,10 @@ class ReloadDataBase:
                         title
                     )
                     self.application_view.break_point()
-                    
+
             elif option == "2":  # Tournois enregistrés
                 loaded_tournament = self.reload_tournament("ended")
-                
+
                 if loaded_tournament:
                     tournament = Tournament(
                         loaded_tournament["name"],
@@ -364,7 +402,7 @@ class ReloadDataBase:
                     tournament.load(loaded_tournament)
                     self.application_view.clear_console()
                     self.data_base_view.display_all_tournament(tournament)
-            
+
             else:
                 break
 

@@ -2,7 +2,7 @@ import random
 import json
 import os
 
-from datetime import date
+from datetime import datetime
 from typing import List, Union
 
 from settings import TOURNAMENT_FILE_PATH, PLAYERS_FILE_PATH
@@ -76,7 +76,7 @@ class Tournament:
         """
         self.name = name
         self.place = place
-        self.start_date = date.today().isoformat()
+        self.start_date = datetime.now().strftime("%d-%m-%Y %H:%M")
         self.end_date = None
         self.round_number = 0
         self.max_round = int(max_round)
@@ -123,7 +123,11 @@ class Tournament:
         return
 
     def ended(self):
-        self.end_date = date.today().isoformat()
+        """
+        Marks the current tournament as ended by setting the end date to the
+        current date and time.
+        """
+        self.end_date = datetime.now().strftime("%d-%m-%Y %H:%M")
 
     def save(self):
         """
@@ -180,8 +184,9 @@ class Tournament:
             round_data = {
                 "name": played_round.name,
                 "round_number": played_round.round_number,
-                "ended": played_round.ended,
-                "matchs": match_data
+                "end_time": played_round.end_time,
+                "start_time": played_round.start_time,
+                "matches": match_data
             }
             rounds_data.append(round_data)
 
@@ -238,7 +243,10 @@ class Tournament:
                 self.players
             )
             )
-            for played_match in loaded_round['matchs']:
+            self.rounds[-1].start_time = loaded_round["start-time"]
+            self.rounds[-1].end_time = loaded_round["end_time"]
+
+            for played_match in loaded_round['matches']:
 
                 player1 = next(player for player in self.players if
                                player.national_player_number ==
@@ -286,7 +294,8 @@ class Round:
         """
         self.name = f"round {round_number}"
         self.round_number = round_number
-        self.ended = False
+        self.start_time = datetime.now().strftime("%d-%m-%Y %H:%M")
+        self.end_time = False
         if self.round_number == 1:
             random.shuffle(players)
             self.players = players
@@ -372,6 +381,13 @@ class Round:
             else:
                 break
         return
+
+    def ended(self):
+        """
+        Marks the current round as ended by setting the end date to the
+        current date and time.
+        """
+        self.end_time = datetime.now().strftime("%d-%m-%Y %H:%M")
 
 
 class Match:
