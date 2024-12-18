@@ -114,6 +114,11 @@ class MainController:
                 if (len(tournament.rounds) == 0
                         or tournament.rounds[-1].ended is True):
                     self.add_round_to_tournament(tournament)
+                    if len(tournament.rounds[-1].matches) != len(
+                            tournament.players) / 2:
+                        (self.tournament_view.
+                         display_matches_creation_error_message())
+                        break
             elif tournament.rounds[-1].ended is True:
                 self.application_view.clear_console()
                 tournament.ended()
