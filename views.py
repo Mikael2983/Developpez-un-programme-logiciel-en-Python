@@ -161,8 +161,7 @@ class TournamentView:
         print(apply_rich_style(
             f"TOUR N° {colored_text}.",
             TITLE_STYLE
-        )
-        )
+        ))
         colored_text = apply_rich_style(
             f"{match_without_score}",
             REQUEST_STYLE
@@ -170,22 +169,19 @@ class TournamentView:
         print(apply_rich_style(
             f"Il reste {colored_text} matchs en cours",
             TEXT_STYLE
-        )
-        )
-        self.data_base_view.display_matchs(
-            current_round.matchs,
-            "listes des matchs en cours"
+        ))
+        self.data_base_view.display_matches(
+            current_round.matches,
+            "listes des matchs du tour"
         )
         print(apply_rich_style(
             "Pour enregistrer un résultat,",
             REQUEST_STYLE
-        )
-        )
+        ))
         return self.console.input(apply_rich_style(
             "entrez un numéro de match: ",
             REQUEST_STYLE
-        )
-        )
+        ))
 
     def display_match_menu(self, current_round: Round):
         """
@@ -195,13 +191,8 @@ class TournamentView:
                                 being displayed.
         :type current_round: Round
         """
-
-        colored_text = f"{current_round.round_number}"
-        print(apply_rich_style(
-            f"Voici la liste des matchs pour le tour {colored_text}.",
-            TEXT_STYLE))
-        self.data_base_view.display_matchs(
-            current_round.matchs,
+        self.data_base_view.display_matches(
+            current_round.matches,
             f"liste des matchs pour le tour {current_round.round_number}"
         )
 
@@ -254,6 +245,22 @@ class TournamentView:
             TEXT_STYLE
         ))
         self.data_base_view.display_all_round(tournament)
+
+    @staticmethod
+    def display_menu_assign_result():
+        request = "Que voulez faire?"
+        text = ["1- renseigner les résultats des matchs",
+                "2- retour"
+                ]
+        display_styled_menu(None, request, text)
+
+    @staticmethod
+    def display_matches_creation_error_message():
+        print(apply_rich_style(
+            "la création automatique des matchs a échoué",
+            ERROR_STYLE
+        ))
+    input()
 
 
 class DataBaseView:
@@ -593,12 +600,12 @@ class DataBaseView:
 
         self.console.print(table)
 
-    def display_matchs(self, matchs: List[Match], title: str):
+    def display_matches(self, matches: List[Match], title: str):
         """
         Displays a list of matches in a formatted columnar view.
 
-        :param matchs: A list of `Match` objects to be displayed.
-        :type matchs: list[Match]
+        :param matches: A list of `Match` objects to be displayed.
+        :type matches: list[Match]
         :param title:  table title to display
         :type title: string
         """
@@ -623,7 +630,7 @@ class DataBaseView:
         table.add_column(
             "Score", justify="center", style=TEXT_STYLE, max_width=6)
 
-        for match in matchs:
+        for match in matches:
             table.add_row(str(match.number),
                           match.player1.name,
                           match.player1.first_name,
@@ -736,7 +743,7 @@ class DataBaseView:
             self.data_base.sort_players(
                 tournament.players,
                 "score",
-                False
+                True
             ),
             "listes des joueurs participants"
         )
@@ -754,13 +761,9 @@ class DataBaseView:
         """
 
         for i in range(len(tournament.rounds)):
-            print(apply_rich_style(
-                f"Round {apply_rich_style(f"{i+1}",
-                                          REQUEST_STYLE)}",
-                TEXT_STYLE
-            ))
-            self.display_matchs(
-                tournament.rounds[i].matchs,
+
+            self.display_matches(
+                tournament.rounds[i].matches,
                 f"liste des matchs du tour "
                 f"{tournament.rounds[i].round_number}"
             )
@@ -787,7 +790,7 @@ class ApplicationView:
         console = Console()
 
         return console.input(apply_rich_style(
-            "Sélectionnez une option?",
+            "Sélectionnez une option: ",
             REQUEST_STYLE
         ))
 

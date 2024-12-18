@@ -73,8 +73,9 @@ Style de code : Conforme à la PEP 8.
 Vérification automatique : Utilisez flake8 pour analyser le code et générer un rapport avec flake8-html. 
 Pour générer ce rapport :
    ```bash
-   flake8 --format=html --htmldir=reports controllers.py models.py views.py main.py
+   flake8 --format=html --htmldir=reports settings.py controllers.py models.py views.py main.py
 ```
+le rapport est visible dans le dossier reports
 
 ## Fonctionnement
 
