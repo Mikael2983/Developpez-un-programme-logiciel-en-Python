@@ -268,7 +268,7 @@ class TournamentView:
             "le tournoi ne peut pas continuer",
             ERROR_STYLE
         ))
-    input()
+        input()
 
     @staticmethod
     def display_too_low_player_number_warning():
@@ -276,6 +276,7 @@ class TournamentView:
             "attention le nombre de joueur inscrits ne permet pas de "
             "réaliser la condition de non duplicité des rencontres",
             ERROR_STYLE))
+        input()
 
     def display_low_player_number_warning(self):
         print(apply_rich_style(

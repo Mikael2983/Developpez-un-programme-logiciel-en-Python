@@ -144,6 +144,7 @@ class MainController:
 
                 tournament.ended()
                 tournament.save()
+                self.application_view.clear_console()
                 self.tournament_view.display_tournament_ended(tournament)
                 break
 
@@ -201,7 +202,6 @@ class MainController:
                         option = (
                             self.tournament_view.display_low_player_number_warning())  # noqa: E501
                         if option == "1":  # start round despite the warning
-
                             return True
                         else:
                             continue
