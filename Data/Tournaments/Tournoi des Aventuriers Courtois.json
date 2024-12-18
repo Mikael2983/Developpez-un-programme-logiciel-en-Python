@@ -1,17 +1,17 @@
 {
     "name": "Tournoi des Aventuriers Courtois",
     "place": "Lyon",
-    "description": "Début de la ronde 1 15h00, inscription sur place 15 minutes avant.",
+    "description": "",
     "start_date": "2024-12-05",
     "end_date": null,
-    "round_number": 0,
+    "round_number": 1,
     "max_round": 7,
     "players": [
         {
-            "national_player_number": "nl35659",
-            "name": "Morel",
-            "first_name": "Lucas",
-            "birthday": "18/07/1988",
+            "national_player_number": "lc82097",
+            "name": "Dupont",
+            "first_name": "Alice",
+            "birthday": "12/04/1995",
             "score": 0
         },
         {
@@ -22,17 +22,10 @@
             "score": 0
         },
         {
-            "national_player_number": "bm25379",
-            "name": "Robert",
-            "first_name": "Emma",
-            "birthday": "01/12/1993",
-            "score": 0
-        },
-        {
-            "national_player_number": "ab23456",
-            "name": "Durand",
-            "first_name": "Giselle",
-            "birthday": "03/07/1985",
+            "national_player_number": "ac12345",
+            "name": "Dupond",
+            "first_name": "Marcel",
+            "birthday": "19/12/1980",
             "score": 0
         },
         {
@@ -43,13 +36,6 @@
             "score": 0
         },
         {
-            "national_player_number": "lc82097",
-            "name": "Dupont",
-            "first_name": "Alice",
-            "birthday": "12/04/1995",
-            "score": 0
-        },
-        {
             "national_player_number": "rb56884",
             "name": "Petit",
             "first_name": "Léo",
@@ -57,13 +43,142 @@
             "score": 0
         },
         {
-            "national_player_number": "ac12345",
-            "name": "Dupond",
-            "first_name": "Marcel",
-            "birthday": "19/12/1980",
+            "national_player_number": "ab23456",
+            "name": "Durand",
+            "first_name": "Giselle",
+            "birthday": "03/07/1985",
+            "score": 0
+        },
+        {
+            "national_player_number": "nl35659",
+            "name": "Morel",
+            "first_name": "Lucas",
+            "birthday": "18/07/1988",
+            "score": 0
+        },
+        {
+            "national_player_number": "bm25379",
+            "name": "Robert",
+            "first_name": "Emma",
+            "birthday": "01/12/1993",
             "score": 0
         }
     ],
     "rounds": [
+        {
+            "name": "round 1",
+            "round_number": 1,
+            "ended": false,
+            "matchs": [
+                {
+                    "match_number": 1,
+                    "player1": {
+                        "national_player_number": "lc82097",
+                        "name": "Dupont",
+                        "first_name": "Alice",
+                        "birthday": "12/04/1995",
+                        "score": 0
+                    },
+                    "player2": {
+                        "national_player_number": "mj67660",
+                        "name": "Martin",
+                        "first_name": "Hugo",
+                        "birthday": "05/06/1990",
+                        "score": 0
+                    },
+                    "result": [
+                        [
+                            "Payer1",
+                            0
+                        ],
+                        [
+                            "Player2",
+                            0
+                        ]
+                    ]
+                },
+                {
+                    "match_number": 2,
+                    "player1": {
+                        "national_player_number": "ac12345",
+                        "name": "Dupond",
+                        "first_name": "Marcel",
+                        "birthday": "19/12/1980",
+                        "score": 0
+                    },
+                    "player2": {
+                        "national_player_number": "ot13879",
+                        "name": "Durand",
+                        "first_name": "Chloé",
+                        "birthday": "23/09/1998",
+                        "score": 0
+                    },
+                    "result": [
+                        [
+                            "Payer1",
+                            0
+                        ],
+                        [
+                            "Player2",
+                            0
+                        ]
+                    ]
+                },
+                {
+                    "match_number": 3,
+                    "player1": {
+                        "national_player_number": "rb56884",
+                        "name": "Petit",
+                        "first_name": "Léo",
+                        "birthday": "14/02/1985",
+                        "score": 0
+                    },
+                    "player2": {
+                        "national_player_number": "ab23456",
+                        "name": "Durand",
+                        "first_name": "Giselle",
+                        "birthday": "03/07/1985",
+                        "score": 0
+                    },
+                    "result": [
+                        [
+                            "Payer1",
+                            0
+                        ],
+                        [
+                            "Player2",
+                            0
+                        ]
+                    ]
+                },
+                {
+                    "match_number": 4,
+                    "player1": {
+                        "national_player_number": "nl35659",
+                        "name": "Morel",
+                        "first_name": "Lucas",
+                        "birthday": "18/07/1988",
+                        "score": 0
+                    },
+                    "player2": {
+                        "national_player_number": "bm25379",
+                        "name": "Robert",
+                        "first_name": "Emma",
+                        "birthday": "01/12/1993",
+                        "score": 0
+                    },
+                    "result": [
+                        [
+                            "Payer1",
+                            0
+                        ],
+                        [
+                            "Player2",
+                            0
+                        ]
+                    ]
+                }
+            ]
+        }
     ]
 }

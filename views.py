@@ -253,7 +253,14 @@ class TournamentView:
                 "2- retour"
                 ]
         display_styled_menu(None, request, text)
-        pass
+
+    @staticmethod
+    def display_matches_creation_error_message():
+        print(apply_rich_style(
+            "la création automatique des matchs a échoué",
+            ERROR_STYLE
+        ))
+    input()
 
 
 class DataBaseView:

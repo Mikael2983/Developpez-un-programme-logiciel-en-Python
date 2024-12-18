@@ -221,6 +221,7 @@ class Tournament:
         self.end_date = loaded_tournament["end_date"]
         self.round_number = loaded_tournament["round_number"]
         self.max_round = loaded_tournament["max_round"]
+
         for player in loaded_tournament["players"]:
             self.players.append(
                 Player(player["national_player_number"],
@@ -238,28 +239,24 @@ class Tournament:
             )
             )
             for played_match in loaded_round['matchs']:
-                data = played_match["player1"]
-                player1 = Player(
-                    data["national_player_number"],
-                    data["name"],
-                    data["first_name"],
-                    data["birthday"],
-                    data["score"]
-                )
-                data = played_match["player2"]
-                player2 = Player(
-                    data["national_player_number"],
-                    data["name"],
-                    data["first_name"],
-                    data["birthday"],
-                    data["score"]
-                )
+
+                player1 = next(player for player in self.players if
+                               player.national_player_number ==
+                               played_match["player1"][
+                                   "national_player_number"])
+                player2 = next(player for player in self.players if
+                               player.national_player_number ==
+                               played_match["player2"][
+                                   "national_player_number"])
+
                 player1.opponents.append(player2.national_player_number)
                 player2.opponents.append(player1.national_player_number)
+
                 match = Match(
                     played_match["match_number"],
                     (player1, player2)
                 )
+
                 if played_match["result"][0][1] == 1:
                     match.result = [(player1, 1), (player2, 0)]
                 elif played_match["result"][1][1] == 1:
@@ -294,10 +291,8 @@ class Round:
             random.shuffle(players)
             self.players = players
         else:
-            self.players = sorted(
-                players,
-                key=lambda player: player.score,
-                reverse=True
+            self.players = DataBase().sort_players(
+                players, "score"
             )
         self.matches = []
 
@@ -347,41 +342,33 @@ class Round:
                     del match.player2.opponents[-1]
                 self.matches = []
                 if attempt == 1:
-                    print(attempt, "resorted")
-                    input("")
                     self.players = DataBase().sort_players(
                         self.players,
-                        "score"
+                        "score", True
                     )
                     continue
                 elif attempt == 2:
-                    print(attempt, "resorted")
-                    input("")
                     self.players = DataBase().sort_players(
                         self.players,
                         "name"
                     )
                 elif attempt == 3:
-                    print(attempt, "resorted")
-                    input("")
                     self.players = DataBase().sort_players(
                         self.players,
-                        "name", False
+                        "name", True
                     )
                 elif attempt == 4:
-                    print(attempt, "resorted")
-                    input("")
                     self.players = DataBase().sort_players(
                         self.players,
-                        "national_player_number", False
+                        "national_player_number"
                     )
                 elif attempt == 5:
-                    print(attempt, "resorted")
-                    input("")
                     self.players = DataBase().sort_players(
                         self.players,
                         "national_player_number", True
                     )
+                else:
+                    break
             else:
                 break
         return
