@@ -16,10 +16,20 @@ class MainController:
         self.reload_data_base = ReloadDataBase()
 
     def run(self):
-        """ menu d'accueil """
+        """
+        Main entry point for the application: displays the home menu.
+
+        This method presents the user with a home menu and handles navigation to:
+        - Manage tournaments: Access tournament-related options (create, load).
+        - Add players to the database: Open the player management menu.
+        - Access saved data: View saved players or tournaments.
+        - Exit the program.
+
+        """
+
         while True:
             self.application_view.clear_console()
-            self.application_view.display_menu()
+            self.application_view.display_home_menu()
             option = self.application_view.choose_option()
             if option == "1":  # Manage a tournament
                 self.manage_tournament_options()
@@ -33,7 +43,15 @@ class MainController:
                 continue
 
     def manage_tournament_options(self):
-        """menu pour options de tournoi """
+        """
+        Displays the tournament options menu and handles user input.
+
+        The method allows the user to:
+        - Start a new tournament by providing its details.
+        - Load an ongoing tournament from the database.
+        - Exit the tournament options menu.
+
+        """
         while True:
             self.application_view.clear_console()
             self.tournament_view.display_menu_tournament()
@@ -72,7 +90,19 @@ class MainController:
                 continue
 
     def run_tournament(self, tournament):
-        """run a tournament instance"""
+        """
+        Runs the main logic for a tournament instance.
+
+        This method handles the lifecycle of a tournament, from player
+        registration to match results validation, rounds progression, and
+        tournament completion. It ensures that a valid number of players are
+        registered, manages rounds, and saves the tournament's state upon
+        completion.
+
+        :param tournament: The tournament instance to run.
+        :type tournament: Tournament
+        """
+
         while True:
             # allow to pass this section if tournament is reloaded
             if len(tournament.rounds) != 0:
@@ -149,7 +179,7 @@ class MainController:
 
     @staticmethod
     def add_round_to_tournament(tournament: Tournament):
-        """ajoute un tour au tournoi
+        """add one round to the tournament
         :param tournament: The tournament object containing rounds and matches.
         :type tournament: Tournament
         """
@@ -186,7 +216,7 @@ class MainController:
                     tournament.rounds[-1].ended = True
                     break
 
-            match_number = (self.tournament_view.display_validate_result_menu(
+            match_number = (self.tournament_view.display_select_results_menu(
                 tournament.rounds[-1],
                 match_without_result)
             )
@@ -278,20 +308,35 @@ class ReloadDataBase:
         return new_player
 
     def access_saved_data(self):
-        """accéder aux données sauvegardées"""
+        """
+        Provides access to saved data, including registered players and
+        completed tournaments.
+
+        This method displays a menu that allows the user to:
+        - View and sort the list of registered players, either by national
+            player number or name.
+        - View details of completed tournaments, including rounds and participants.
+
+        :raises FileNotFoundError: If the players' database file does not exist.
+        :raises json.JSONDecodeError: If the players' database file is malformed.
+        """
+
         while True:
             self.application_view.clear_console()
             self.data_base_view.display_menu_saved_data()
             option = self.application_view.choose_option()
+            
             if option == "1":  # Joueurs enregistrés
                 json_file = PLAYERS_FILE_PATH
                 DataBase.check_existence_json_file(json_file)
+                
                 with (open(json_file, "r", encoding="utf-8") as file):
                     players_data = json.load(file)
                     players = [Player(**data) for data in players_data]
                     self.application_view.clear_console()
                     self.data_base_view.display_menu_registered_players()
                     option = self.application_view.choose_option()
+                    
                     if option == "1":  # sorted by national player number
                         sorted_players = self.data_base.sort_players(
                             players,
@@ -307,8 +352,10 @@ class ReloadDataBase:
                         title
                     )
                     self.application_view.break_point()
+                    
             elif option == "2":  # Tournois enregistrés
                 loaded_tournament = self.reload_tournament("ended")
+                
                 if loaded_tournament:
                     tournament = Tournament(
                         loaded_tournament["name"],
@@ -317,6 +364,7 @@ class ReloadDataBase:
                     tournament.load(loaded_tournament)
                     self.application_view.clear_console()
                     self.data_base_view.display_all_tournament(tournament)
+            
             else:
                 break
 
