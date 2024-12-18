@@ -278,17 +278,12 @@ class TournamentView:
     def display_low_player_number_warning(self):
         print(apply_rich_style(
             "le nombre de joueur inscrits ne garantit pas la génération des "
-            "paires pour les matchs uniquement en fonction des scores des joueurs"
-            "puisse être respecté", ERROR_STYLE))
+            "paires pour les matchs uniquement en fonction des scores des "
+            "joueurs puisse être respecté", ERROR_STYLE))
         requests = "voulez commencer le tournoi?"
         text = ["1- Oui.", "2- Non"]
         display_styled_menu(None, requests, text)
         return self.application_view.choose_option()
-
-
-
-
-
 
 
 class DataBaseView:

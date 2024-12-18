@@ -19,7 +19,8 @@ class MainController:
         """
         Main entry point for the application: displays the home menu.
 
-        This method presents the user with a home menu and handles navigation to:
+        This method presents the user with a home menu and handles
+        navigation to:
         - Manage tournaments: Access tournament-related options (create, load).
         - Add players to the database: Open the player management menu.
         - Access saved data: View saved players or tournaments.
@@ -120,16 +121,16 @@ class MainController:
                 option = self.application_view.choose_option()
                 if option == "2":  # start the first round
                     if len(tournament.players) % 2 != 0:
-                        self.tournament_view.display_wrong_players_number_message()
+                        (self.tournament_view.display_wrong_players_number_message())  # noqa: E501
                         continue
                     elif len(tournament.players) < int(
                             tournament.max_round) + 1:
-                        self.tournament_view.display_too_low_player_number_warning()
+                        self.tournament_view.display_too_low_player_number_warning()  # noqa: E501
                         continue
                     elif len(tournament.players) < 2 * int(
                             tournament.max_round):
                         option = (
-                            self.tournament_view.display_low_player_number_warning())
+                            self.tournament_view.display_low_player_number_warning())  # noqa: E501
                         if option == "1":
                             break
                         else:
@@ -157,7 +158,7 @@ class MainController:
 
                     if (len(tournament.rounds[-1].matches) !=
                             len(tournament.players) / 2):
-                        self.tournament_view.display_matches_creation_error_message()
+                        self.tournament_view.display_matches_creation_error_message()  # noqa: E501
                         tournament.ended()
                         self.tournament_view.display_tournament_ended(
                             tournament)
@@ -353,10 +354,8 @@ class ReloadDataBase:
         This method displays a menu that allows the user to:
         - View and sort the list of registered players, either by national
             player number or name.
-        - View details of completed tournaments, including rounds and participants.
-
-        :raises FileNotFoundError: If the players' database file does not exist.
-        :raises json.JSONDecodeError: If the players' database file is malformed.
+        - View details of completed tournaments, including rounds and
+            participants.
         """
 
         while True:
