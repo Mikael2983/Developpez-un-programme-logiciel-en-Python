@@ -190,7 +190,7 @@ class Tournament:
             round_data = {
                 "name": played_round.name,
                 "round_number": played_round.round_number,
-                "start_time": played_round.start_time.strftime("%d-%m-%Y %H:%M"),
+                "start_time": played_round.start_time.strftime("%d-%m-%Y %H:%M"),  # noqa: E501
                 "end_time": end,
                 "matches": match_data
             }

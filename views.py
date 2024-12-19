@@ -55,7 +55,7 @@ class TournamentView:
         while True:
             max_round_number = self.console.input(
                 apply_rich_style(
-                    "Nombre de tour (4 par défault) :",
+                    "Nombre de ronde (4 par défault) :",
                     TEXT_STYLE))
             if max_round_number.isdigit() or max_round_number == '':
                 break
@@ -161,7 +161,7 @@ class TournamentView:
             REQUEST_STYLE
         )
         print(apply_rich_style(
-            f"TOUR N° {colored_text}.",
+            f"Ronde N° {colored_text}.",
             TITLE_STYLE
         ))
         colored_text = apply_rich_style(
@@ -174,7 +174,7 @@ class TournamentView:
         ))
         self.data_base_view.display_matches(
             current_round.matches,
-            "listes des matchs du tour"
+            "listes des matchs de la ronde"
         )
         print(apply_rich_style(
             "Pour enregistrer un résultat,",
@@ -195,7 +195,7 @@ class TournamentView:
         """
         self.data_base_view.display_matches(
             current_round.matches,
-            f"liste des matchs pour le tour {current_round.round_number}"
+            f"liste des matchs de la ronde {current_round.round_number}"
         )
 
     @staticmethod
@@ -240,7 +240,7 @@ class TournamentView:
             "Voici le classement final"
         )
         print(apply_rich_style(
-            "voici le détail des tours joués",
+            "voici le détail des rondes jouées",
             TEXT_STYLE
         ))
         self.data_base_view.display_all_round(tournament)
@@ -256,8 +256,8 @@ class TournamentView:
 
         """
         request = "Que voulez faire?"
-        text = ["1- renseigner les résultats des matchs",
-                "2- retour"
+        text = ["1- Renseigner les résultats des matchs.",
+                "2- Retour."
                 ]
         display_styled_menu(None, request, text)
 
@@ -273,18 +273,20 @@ class TournamentView:
     @staticmethod
     def display_too_low_player_number_warning():
         print(apply_rich_style(
-            "attention le nombre de joueur inscrits ne permet pas de "
+            "le nombre de joueur inscrits ne permet pas de "
             "réaliser la condition de non duplicité des rencontres",
             ERROR_STYLE))
         input()
 
     def display_low_player_number_warning(self):
         print(apply_rich_style(
-            "le nombre de joueur inscrits ne garantit pas la génération des "
-            "paires pour les matchs \2 uniquement en fonction des scores des "
-            "joueurs puisse être respecté", ERROR_STYLE))
-        requests = "voulez commencer le tournoi?"
-        text = ["1- Oui.", "2- Non"]
+             "Le nombre de joueurs inscrits est insuffisant pour "
+             "garantir que les paires des matchs \n puissent être générées "
+             "uniquement en fonction des scores des joueurs.",
+             INFORMATION_STYLE
+        ))
+        requests = "Voulez commencer le tournoi?"
+        text = ["1- Oui.", "2- Non."]
         display_styled_menu(None, requests, text)
         return self.application_view.choose_option()
 
@@ -315,7 +317,7 @@ class DataBaseView:
         print("")
         add_player_number = self.console.input(
             apply_rich_style(
-                "quel est le numéro du joueur? : ",
+                "Quel est le numéro du joueur? : ",
                 REQUEST_STYLE
             )
         )
@@ -342,7 +344,7 @@ class DataBaseView:
         ))
         self.display_players_list(
             [player],
-            "informations du joueur"
+            "Informations du joueur"
         )
 
     def player_not_in_database(self, player_number: str) -> dict:
@@ -640,7 +642,7 @@ class DataBaseView:
                       header_style=REQUEST_STYLE
                       )
         table.add_column(
-            "match", justify="center", style=TEXT_STYLE, max_width=6)
+            "Match", justify="center", style=TEXT_STYLE, max_width=6)
         table.add_column(
             "Nom", justify="center", style=SUCCESS_STYLE, max_width=15)
         table.add_column(
@@ -710,7 +712,7 @@ class DataBaseView:
         table.add_column(
             "date de début", justify="center", style=TEXT_STYLE, max_width=12)
         table.add_column(
-            "Ronde", justify="center", style=TEXT_STYLE, max_width=7)
+            "Rondes", justify="center", style=TEXT_STYLE, max_width=7)
         table.add_column(
             "Statut", justify="center", max_width=15)
         table.add_column(
@@ -791,7 +793,7 @@ class DataBaseView:
             print("\n")
             self.display_matches(
                 tournament.rounds[i].matches,
-                f"liste des matchs du tour "
+                f"liste des matchs de la ronde "
                 f"{tournament.rounds[i].round_number}"
             )
             start_time = apply_rich_style(
@@ -802,12 +804,12 @@ class DataBaseView:
                 end_time = apply_rich_style(
                     f"{tournament.rounds[i].end_time.strftime("%H:%M")}",
                     REQUEST_STYLE)
-                end_sentence = f" et c'est achevé à {end_time}."
+                end_sentence = f" et s'est achevée à {end_time}."
             else:
-                end_sentence = " et n'est pas terminé"
+                end_sentence = " et n'est pas terminée"
 
-            print(apply_rich_style(f"Ce tour a commencé à {start_time}"
-                                   f"{end_sentence}",
+            print(apply_rich_style(
+                f"Cette ronde a commencé à {start_time} {end_sentence}",
                                    TEXT_STYLE
                                    )
                   )
@@ -874,7 +876,7 @@ def display_styled_menu(
     Displays a stylized menu with a header, a request, and a list
     of text items.
 
-    The function uses a `rich_style` function to apply styles to
+    The function uses a `apply_rich_style` function to apply styles to
     the header, request, and text.
     The header is displayed with an underline, and each text item
     is indented.
