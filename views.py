@@ -55,7 +55,7 @@ class TournamentView:
         while True:
             max_round_number = self.console.input(
                 apply_rich_style(
-                    "Nombre de tour (4 par défault) :",
+                    "Nombre de ronde (4 par défault) :",
                     TEXT_STYLE))
             if max_round_number.isdigit() or max_round_number == '':
                 break
@@ -99,7 +99,9 @@ class TournamentView:
     def display_menu_add_player():
         """Asks if there are other players to register"""
         request = "Sélectionnez une option :"
-        text = ["1- Ajouter des joueurs", "2- Commencer le 1er Tour"]
+        text = ["1- Ajouter des joueurs",
+                "2- Commencer le 1er Tour",
+                "3- Retour"]
         display_styled_menu(None, request, text)
 
     @staticmethod
@@ -140,9 +142,9 @@ class TournamentView:
                 "4- Retour."]
         display_styled_menu(None, request, text)
 
-    def display_validate_result_menu(self,
-                                     current_round: Round,
-                                     match_without_score: int) \
+    def display_select_results_menu(self,
+                                    current_round: Round,
+                                    match_without_score: int) \
             -> str:
         """
         Displays a menu for selecting a match to record its result.
@@ -159,7 +161,7 @@ class TournamentView:
             REQUEST_STYLE
         )
         print(apply_rich_style(
-            f"TOUR N° {colored_text}.",
+            f"Ronde N° {colored_text}.",
             TITLE_STYLE
         ))
         colored_text = apply_rich_style(
@@ -172,7 +174,7 @@ class TournamentView:
         ))
         self.data_base_view.display_matches(
             current_round.matches,
-            "listes des matchs du tour"
+            "listes des matchs de la ronde"
         )
         print(apply_rich_style(
             "Pour enregistrer un résultat,",
@@ -193,7 +195,7 @@ class TournamentView:
         """
         self.data_base_view.display_matches(
             current_round.matches,
-            f"liste des matchs pour le tour {current_round.round_number}"
+            f"liste des matchs de la ronde {current_round.round_number}"
         )
 
     @staticmethod
@@ -228,39 +230,65 @@ class TournamentView:
             "Le tournoi est terminé",
             SUCCESS_STYLE
         ))
-        print(apply_rich_style(
-            "Voici le classement final",
-            TEXT_STYLE
-        ))
+
         self.data_base_view.display_players_score(
             self.data_base.sort_players(
                 tournament.players,
                 "score",
                 True
             ),
-            "liste des joueurs classée par score"
+            "Voici le classement final"
         )
         print(apply_rich_style(
-            "voici le détail des tours joués",
+            "voici le détail des rondes jouées",
             TEXT_STYLE
         ))
         self.data_base_view.display_all_round(tournament)
 
     @staticmethod
     def display_menu_assign_result():
+        """
+        Displays the menu for assigning match results.
+
+        This menu offers the following options:
+        - 1: Record the results of the matches.
+        - 2: Return to the previous menu.
+
+        """
         request = "Que voulez faire?"
-        text = ["1- renseigner les résultats des matchs",
-                "2- retour"
+        text = ["1- Renseigner les résultats des matchs.",
+                "2- Retour."
                 ]
         display_styled_menu(None, request, text)
 
     @staticmethod
     def display_matches_creation_error_message():
         print(apply_rich_style(
-            "la création automatique des matchs a échoué",
+            "la création automatique des matchs a échoué,"
+            "le tournoi ne peut pas continuer",
             ERROR_STYLE
         ))
-    input()
+        input()
+
+    @staticmethod
+    def display_too_low_player_number_warning():
+        print(apply_rich_style(
+            "le nombre de joueur inscrits ne permet pas de "
+            "réaliser la condition de non duplicité des rencontres",
+            ERROR_STYLE))
+        input()
+
+    def display_low_player_number_warning(self):
+        print(apply_rich_style(
+             "Le nombre de joueurs inscrits est insuffisant pour "
+             "garantir que les paires des matchs \n puissent être générées "
+             "uniquement en fonction des scores des joueurs.",
+             INFORMATION_STYLE
+        ))
+        requests = "Voulez commencer le tournoi?"
+        text = ["1- Oui.", "2- Non."]
+        display_styled_menu(None, requests, text)
+        return self.application_view.choose_option()
 
 
 class DataBaseView:
@@ -289,7 +317,7 @@ class DataBaseView:
         print("")
         add_player_number = self.console.input(
             apply_rich_style(
-                "quel est le numéro du joueur? : ",
+                "Quel est le numéro du joueur? : ",
                 REQUEST_STYLE
             )
         )
@@ -316,7 +344,7 @@ class DataBaseView:
         ))
         self.display_players_list(
             [player],
-            "informations du joueur"
+            "Informations du joueur"
         )
 
     def player_not_in_database(self, player_number: str) -> dict:
@@ -614,7 +642,7 @@ class DataBaseView:
                       header_style=REQUEST_STYLE
                       )
         table.add_column(
-            "match", justify="center", style=TEXT_STYLE, max_width=6)
+            "Match", justify="center", style=TEXT_STYLE, max_width=6)
         table.add_column(
             "Nom", justify="center", style=SUCCESS_STYLE, max_width=15)
         table.add_column(
@@ -660,13 +688,13 @@ class DataBaseView:
 
             :param tournaments: A list of dictionaries representing
                                 tournaments.
-             Each dictionary should have the keys:
-                    - 'name',
-                    - 'place',
-                    - 'start_date',
-                    - 'max_round',
-                    - 'round_number',
-                    - 'description'.
+            Each dictionary should have the keys:
+                - 'name',
+                - 'place',
+                - 'start_date',
+                - 'max_round',
+                - 'round_number',
+                - 'description'.
             :type tournaments: list[dict]
             :return: The user-selected tournament index as a string.
             :rtype: str
@@ -684,7 +712,7 @@ class DataBaseView:
         table.add_column(
             "date de début", justify="center", style=TEXT_STYLE, max_width=12)
         table.add_column(
-            "Ronde", justify="center", style=TEXT_STYLE, max_width=7)
+            "Rondes", justify="center", style=TEXT_STYLE, max_width=7)
         table.add_column(
             "Statut", justify="center", max_width=15)
         table.add_column(
@@ -730,7 +758,7 @@ class DataBaseView:
                     REQUEST_STYLE
                 ),
                 apply_rich_style(
-                    f"{tournament.start_date}",
+                    f"{tournament.start_date.strftime("%d-%m-%Y")}",
                     REQUEST_STYLE
                 )]
         print(apply_rich_style(
@@ -742,8 +770,7 @@ class DataBaseView:
         self.display_players_score(
             self.data_base.sort_players(
                 tournament.players,
-                "score",
-                True
+                "name",
             ),
             "listes des joueurs participants"
         )
@@ -762,17 +789,36 @@ class DataBaseView:
 
         for i in range(len(tournament.rounds)):
 
+            print("\n")
             self.display_matches(
                 tournament.rounds[i].matches,
-                f"liste des matchs du tour "
+                f"liste des matchs de la ronde "
                 f"{tournament.rounds[i].round_number}"
             )
+            start_time = apply_rich_style(
+                f"{tournament.rounds[i].start_time.strftime("%H:%M")}",
+                REQUEST_STYLE)
+
+            if tournament.rounds[i].end_time:
+                end_time = apply_rich_style(
+                    f"{tournament.rounds[i].end_time.strftime("%H:%M")}",
+                    REQUEST_STYLE)
+                end_sentence = f" et s'est achevée à {end_time}."
+            else:
+                end_sentence = " et n'est pas terminée"
+
+            print(apply_rich_style(
+                f"Cette ronde a commencé à {start_time} {end_sentence}",
+                TEXT_STYLE
+                )
+            )
+
         input("")
 
 
 class ApplicationView:
     @staticmethod
-    def display_menu():
+    def display_home_menu():
         """welcome menu"""
         header = "Bienvenue dans votre outil de gestion de tournoi"
         request = "Que souhaitez vous faire?"
@@ -830,7 +876,7 @@ def display_styled_menu(
     Displays a stylized menu with a header, a request, and a list
     of text items.
 
-    The function uses a `rich_style` function to apply styles to
+    The function uses a `apply_rich_style` function to apply styles to
     the header, request, and text.
     The header is displayed with an underline, and each text item
     is indented.
