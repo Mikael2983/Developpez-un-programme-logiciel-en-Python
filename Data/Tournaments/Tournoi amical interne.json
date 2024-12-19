@@ -2,45 +2,17 @@
     "name": "Tournoi amical interne",
     "place": "Pessac",
     "description": "",
-    "start_date": "2024-12-06",
-    "end_date": "2024-12-16",
+    "start_date": "06-09-2024 09:00",
+    "end_date": "06-09-2024 18:37",
     "round_number": 4,
     "max_round": 4,
     "players": [
         {
-            "national_player_number": "ab23456",
-            "name": "Durand",
-            "first_name": "Giselle",
-            "birthday": "03/07/1985",
-            "score": 3
-        },
-        {
-            "national_player_number": "nl35659",
-            "name": "Morel",
-            "first_name": "Lucas",
-            "birthday": "18/07/1988",
-            "score": 1
-        },
-        {
-            "national_player_number": "mj67660",
-            "name": "Martin",
-            "first_name": "Hugo",
-            "birthday": "05/06/1990",
-            "score": 1
-        },
-        {
-            "national_player_number": "rb56884",
-            "name": "Petit",
-            "first_name": "Léo",
-            "birthday": "14/02/1985",
-            "score": 4
-        },
-        {
-            "national_player_number": "ac12345",
-            "name": "Dupond",
-            "first_name": "Marcel",
-            "birthday": "19/12/1980",
-            "score": 2
+            "national_player_number": "bm25379",
+            "name": "Robert",
+            "first_name": "Emma",
+            "birthday": "01/12/1993",
+            "score": 0.5
         },
         {
             "national_player_number": "lc82097",
@@ -50,94 +22,123 @@
             "score": 2
         },
         {
-            "national_player_number": "bm25379",
-            "name": "Robert",
-            "first_name": "Emma",
-            "birthday": "01/12/1993",
-            "score": 1
-        },
-        {
             "national_player_number": "ot13879",
             "name": "Durand",
             "first_name": "Chloé",
             "birthday": "23/09/1998",
             "score": 2
+        },
+        {
+            "national_player_number": "nl35659",
+            "name": "Morel",
+            "first_name": "Lucas",
+            "birthday": "18/07/1988",
+            "score": 2.5
+        },
+        {
+            "national_player_number": "mj67660",
+            "name": "Martin",
+            "first_name": "Hugo",
+            "birthday": "05/06/1990",
+            "score": 2
+        },
+        {
+            "national_player_number": "ac12345",
+            "name": "Dupond",
+            "first_name": "Marcel",
+            "birthday": "19/12/1980",
+            "score": 2
+        },
+        {
+            "national_player_number": "ab23456",
+            "name": "Durand",
+            "first_name": "Giselle",
+            "birthday": "03/07/1985",
+            "score": 1
+        },
+        {
+            "national_player_number": "rb56884",
+            "name": "Petit",
+            "first_name": "Léo",
+            "birthday": "14/02/1985",
+            "score": 4
         }
     ],
     "rounds": [
         {
             "name": "round 1",
             "round_number": 1,
-            "ended": true,
-            "matchs": [
+            "start_time": "06-09-2024 09:00",
+            "end_time": "06-09-2024 11:13",
+            "matches": [
                 {
                     "match_number": 1,
                     "player1": {
-                        "national_player_number": "ab23456",
-                        "name": "Durand",
-                        "first_name": "Giselle",
-                        "birthday": "03/07/1985",
-                        "score": 4
-                    },
-                    "player2": {
-                        "national_player_number": "nl35659",
-                        "name": "Morel",
-                        "first_name": "Lucas",
-                        "birthday": "18/07/1988",
-                        "score": 1
-                    },
-                    "result": [
-                        [
-                            "Payer1",
-                            1
-                        ],
-                        [
-                            "Player2",
-                            0
-                        ]
-                    ]
-                },
-                {
-                    "match_number": 2,
-                    "player1": {
-                        "national_player_number": "mj67660",
-                        "name": "Martin",
-                        "first_name": "Hugo",
-                        "birthday": "05/06/1990",
-                        "score": 1
-                    },
-                    "player2": {
-                        "national_player_number": "rb56884",
-                        "name": "Petit",
-                        "first_name": "Léo",
-                        "birthday": "14/02/1985",
-                        "score": 5
-                    },
-                    "result": [
-                        [
-                            "Payer1",
-                            0
-                        ],
-                        [
-                            "Player2",
-                            1
-                        ]
-                    ]
-                },
-                {
-                    "match_number": 3,
-                    "player1": {
-                        "national_player_number": "ac12345",
-                        "name": "Dupond",
-                        "first_name": "Marcel",
-                        "birthday": "19/12/1980",
-                        "score": 2
+                        "national_player_number": "bm25379",
+                        "name": "Robert",
+                        "first_name": "Emma",
+                        "birthday": "01/12/1993",
+                        "score": 0.5
                     },
                     "player2": {
                         "national_player_number": "lc82097",
                         "name": "Dupont",
                         "first_name": "Alice",
                         "birthday": "12/04/1995",
+                        "score": 2
+                    },
+                    "result": [
+                        [
+                            "Payer1",
+                            0
+                        ],
+                        [
+                            "Player2",
+                            1
+                        ]
+                    ]
+                },
+                {
+                    "match_number": 2,
+                    "player1": {
+                        "national_player_number": "ot13879",
+                        "name": "Durand",
+                        "first_name": "Chloé",
+                        "birthday": "23/09/1998",
+                        "score": 2
+                    },
+                    "player2": {
+                        "national_player_number": "nl35659",
+                        "name": "Morel",
+                        "first_name": "Lucas",
+                        "birthday": "18/07/1988",
+                        "score": 2.5
+                    },
+                    "result": [
+                        [
+                            "Payer1",
+                            1
+                        ],
+                        [
+                            "Player2",
+                            0
+                        ]
+                    ]
+                },
+                {
+                    "match_number": 3,
+                    "player1": {
+                        "national_player_number": "mj67660",
+                        "name": "Martin",
+                        "first_name": "Hugo",
+                        "birthday": "05/06/1990",
+                        "score": 2
+                    },
+                    "player2": {
+                        "national_player_number": "ac12345",
+                        "name": "Dupond",
+                        "first_name": "Marcel",
+                        "birthday": "19/12/1980",
                         "score": 2
                     },
                     "result": [
@@ -154,18 +155,18 @@
                 {
                     "match_number": 4,
                     "player1": {
-                        "national_player_number": "bm25379",
-                        "name": "Robert",
-                        "first_name": "Emma",
-                        "birthday": "01/12/1993",
+                        "national_player_number": "ab23456",
+                        "name": "Durand",
+                        "first_name": "Giselle",
+                        "birthday": "03/07/1985",
                         "score": 1
                     },
                     "player2": {
-                        "national_player_number": "ot13879",
-                        "name": "Durand",
-                        "first_name": "Chloé",
-                        "birthday": "23/09/1998",
-                        "score": 2
+                        "national_player_number": "rb56884",
+                        "name": "Petit",
+                        "first_name": "Léo",
+                        "birthday": "14/02/1985",
+                        "score": 4
                     },
                     "result": [
                         [
@@ -183,32 +184,33 @@
         {
             "name": "round 2",
             "round_number": 2,
-            "ended": true,
-            "matchs": [
+            "start_time": "06-09-2024 11:30",
+            "end_time": "06-09-2024 13:46",
+            "matches": [
                 {
                     "match_number": 1,
                     "player1": {
-                        "national_player_number": "ab23456",
-                        "name": "Durand",
-                        "first_name": "Giselle",
-                        "birthday": "03/07/1985",
-                        "score": 4
+                        "national_player_number": "bm25379",
+                        "name": "Robert",
+                        "first_name": "Emma",
+                        "birthday": "01/12/1993",
+                        "score": 0.5
                     },
                     "player2": {
-                        "national_player_number": "rb56884",
-                        "name": "Petit",
-                        "first_name": "Léo",
-                        "birthday": "14/02/1985",
-                        "score": 5
+                        "national_player_number": "nl35659",
+                        "name": "Morel",
+                        "first_name": "Lucas",
+                        "birthday": "18/07/1988",
+                        "score": 2.5
                     },
                     "result": [
                         [
                             "Payer1",
-                            0
+                            0.5
                         ],
                         [
                             "Player2",
-                            1
+                            0.5
                         ]
                     ]
                 },
@@ -222,38 +224,38 @@
                         "score": 2
                     },
                     "player2": {
-                        "national_player_number": "ot13879",
+                        "national_player_number": "ab23456",
                         "name": "Durand",
-                        "first_name": "Chloé",
-                        "birthday": "23/09/1998",
-                        "score": 2
+                        "first_name": "Giselle",
+                        "birthday": "03/07/1985",
+                        "score": 1
                     },
                     "result": [
                         [
                             "Payer1",
-                            0
+                            1
                         ],
                         [
                             "Player2",
-                            1
+                            0
                         ]
                     ]
                 },
                 {
                     "match_number": 3,
                     "player1": {
-                        "national_player_number": "nl35659",
-                        "name": "Morel",
-                        "first_name": "Lucas",
-                        "birthday": "18/07/1988",
-                        "score": 1
+                        "national_player_number": "lc82097",
+                        "name": "Dupont",
+                        "first_name": "Alice",
+                        "birthday": "12/04/1995",
+                        "score": 2
                     },
                     "player2": {
-                        "national_player_number": "mj67660",
-                        "name": "Martin",
-                        "first_name": "Hugo",
-                        "birthday": "05/06/1990",
-                        "score": 1
+                        "national_player_number": "ot13879",
+                        "name": "Durand",
+                        "first_name": "Chloé",
+                        "birthday": "23/09/1998",
+                        "score": 2
                     },
                     "result": [
                         [
@@ -269,27 +271,27 @@
                 {
                     "match_number": 4,
                     "player1": {
-                        "national_player_number": "lc82097",
-                        "name": "Dupont",
-                        "first_name": "Alice",
-                        "birthday": "12/04/1995",
+                        "national_player_number": "mj67660",
+                        "name": "Martin",
+                        "first_name": "Hugo",
+                        "birthday": "05/06/1990",
                         "score": 2
                     },
                     "player2": {
-                        "national_player_number": "bm25379",
-                        "name": "Robert",
-                        "first_name": "Emma",
-                        "birthday": "01/12/1993",
-                        "score": 1
+                        "national_player_number": "rb56884",
+                        "name": "Petit",
+                        "first_name": "Léo",
+                        "birthday": "14/02/1985",
+                        "score": 4
                     },
                     "result": [
                         [
                             "Payer1",
-                            1
+                            0
                         ],
                         [
                             "Player2",
-                            0
+                            1
                         ]
                     ]
                 }
@@ -298,23 +300,24 @@
         {
             "name": "round 3",
             "round_number": 3,
-            "ended": true,
-            "matchs": [
+            "start_time": "06-09-2024 14:00",
+            "end_time": "06-09-2024 16:22",
+            "matches": [
                 {
                     "match_number": 1,
                     "player1": {
-                        "national_player_number": "rb56884",
-                        "name": "Petit",
-                        "first_name": "Léo",
-                        "birthday": "14/02/1985",
-                        "score": 5
+                        "national_player_number": "ab23456",
+                        "name": "Durand",
+                        "first_name": "Giselle",
+                        "birthday": "03/07/1985",
+                        "score": 1
                     },
                     "player2": {
-                        "national_player_number": "ot13879",
-                        "name": "Durand",
-                        "first_name": "Chloé",
-                        "birthday": "23/09/1998",
-                        "score": 2
+                        "national_player_number": "bm25379",
+                        "name": "Robert",
+                        "first_name": "Emma",
+                        "birthday": "01/12/1993",
+                        "score": 0.5
                     },
                     "result": [
                         [
@@ -330,11 +333,38 @@
                 {
                     "match_number": 2,
                     "player1": {
-                        "national_player_number": "ab23456",
+                        "national_player_number": "nl35659",
+                        "name": "Morel",
+                        "first_name": "Lucas",
+                        "birthday": "18/07/1988",
+                        "score": 2.5
+                    },
+                    "player2": {
+                        "national_player_number": "mj67660",
+                        "name": "Martin",
+                        "first_name": "Hugo",
+                        "birthday": "05/06/1990",
+                        "score": 2
+                    },
+                    "result": [
+                        [
+                            "Payer1",
+                            1
+                        ],
+                        [
+                            "Player2",
+                            0
+                        ]
+                    ]
+                },
+                {
+                    "match_number": 3,
+                    "player1": {
+                        "national_player_number": "ot13879",
                         "name": "Durand",
-                        "first_name": "Giselle",
-                        "birthday": "03/07/1985",
-                        "score": 4
+                        "first_name": "Chloé",
+                        "birthday": "23/09/1998",
+                        "score": 2
                     },
                     "player2": {
                         "national_player_number": "ac12345",
@@ -342,6 +372,95 @@
                         "first_name": "Marcel",
                         "birthday": "19/12/1980",
                         "score": 2
+                    },
+                    "result": [
+                        [
+                            "Payer1",
+                            0
+                        ],
+                        [
+                            "Player2",
+                            1
+                        ]
+                    ]
+                },
+                {
+                    "match_number": 4,
+                    "player1": {
+                        "national_player_number": "lc82097",
+                        "name": "Dupont",
+                        "first_name": "Alice",
+                        "birthday": "12/04/1995",
+                        "score": 2
+                    },
+                    "player2": {
+                        "national_player_number": "rb56884",
+                        "name": "Petit",
+                        "first_name": "Léo",
+                        "birthday": "14/02/1985",
+                        "score": 4
+                    },
+                    "result": [
+                        [
+                            "Payer1",
+                            0
+                        ],
+                        [
+                            "Player2",
+                            1
+                        ]
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "round 4",
+            "round_number": 4,
+            "start_time": "06-09-2024 16:30",
+            "end_time": "06-09-2024 18:37",
+            "matches": [
+                {
+                    "match_number": 1,
+                    "player1": {
+                        "national_player_number": "bm25379",
+                        "name": "Robert",
+                        "first_name": "Emma",
+                        "birthday": "01/12/1993",
+                        "score": 0.5
+                    },
+                    "player2": {
+                        "national_player_number": "ot13879",
+                        "name": "Durand",
+                        "first_name": "Chloé",
+                        "birthday": "23/09/1998",
+                        "score": 2
+                    },
+                    "result": [
+                        [
+                            "Payer1",
+                            0
+                        ],
+                        [
+                            "Player2",
+                            1
+                        ]
+                    ]
+                },
+                {
+                    "match_number": 2,
+                    "player1": {
+                        "national_player_number": "mj67660",
+                        "name": "Martin",
+                        "first_name": "Hugo",
+                        "birthday": "05/06/1990",
+                        "score": 2
+                    },
+                    "player2": {
+                        "national_player_number": "ab23456",
+                        "name": "Durand",
+                        "first_name": "Giselle",
+                        "birthday": "03/07/1985",
+                        "score": 1
                     },
                     "result": [
                         [
@@ -361,68 +480,7 @@
                         "name": "Morel",
                         "first_name": "Lucas",
                         "birthday": "18/07/1988",
-                        "score": 1
-                    },
-                    "player2": {
-                        "national_player_number": "lc82097",
-                        "name": "Dupont",
-                        "first_name": "Alice",
-                        "birthday": "12/04/1995",
-                        "score": 2
-                    },
-                    "result": [
-                        [
-                            "Payer1",
-                            0
-                        ],
-                        [
-                            "Player2",
-                            1
-                        ]
-                    ]
-                },
-                {
-                    "match_number": 4,
-                    "player1": {
-                        "national_player_number": "mj67660",
-                        "name": "Martin",
-                        "first_name": "Hugo",
-                        "birthday": "05/06/1990",
-                        "score": 1
-                    },
-                    "player2": {
-                        "national_player_number": "bm25379",
-                        "name": "Robert",
-                        "first_name": "Emma",
-                        "birthday": "01/12/1993",
-                        "score": 1
-                    },
-                    "result": [
-                        [
-                            "Payer1",
-                            1
-                        ],
-                        [
-                            "Player2",
-                            0
-                        ]
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "round 4",
-            "round_number": 4,
-            "ended": true,
-            "matchs": [
-                {
-                    "match_number": 1,
-                    "player1": {
-                        "national_player_number": "rb56884",
-                        "name": "Petit",
-                        "first_name": "Léo",
-                        "birthday": "14/02/1985",
-                        "score": 5
+                        "score": 2.5
                     },
                     "player2": {
                         "national_player_number": "lc82097",
@@ -443,74 +501,20 @@
                     ]
                 },
                 {
-                    "match_number": 2,
-                    "player1": {
-                        "national_player_number": "ab23456",
-                        "name": "Durand",
-                        "first_name": "Giselle",
-                        "birthday": "03/07/1985",
-                        "score": 4
-                    },
-                    "player2": {
-                        "national_player_number": "ot13879",
-                        "name": "Durand",
-                        "first_name": "Chloé",
-                        "birthday": "23/09/1998",
-                        "score": 2
-                    },
-                    "result": [
-                        [
-                            "Payer1",
-                            1
-                        ],
-                        [
-                            "Player2",
-                            0
-                        ]
-                    ]
-                },
-                {
                     "match_number": 4,
                     "player1": {
-                        "national_player_number": "nl35659",
-                        "name": "Morel",
-                        "first_name": "Lucas",
-                        "birthday": "18/07/1988",
-                        "score": 1
-                    },
-                    "player2": {
-                        "national_player_number": "bm25379",
-                        "name": "Robert",
-                        "first_name": "Emma",
-                        "birthday": "01/12/1993",
-                        "score": 1
-                    },
-                    "result": [
-                        [
-                            "Payer1",
-                            0
-                        ],
-                        [
-                            "Player2",
-                            1
-                        ]
-                    ]
-                },
-                {
-                    "match_number": 5,
-                    "player1": {
-                        "national_player_number": "mj67660",
-                        "name": "Martin",
-                        "first_name": "Hugo",
-                        "birthday": "05/06/1990",
-                        "score": 1
-                    },
-                    "player2": {
                         "national_player_number": "ac12345",
                         "name": "Dupond",
                         "first_name": "Marcel",
                         "birthday": "19/12/1980",
                         "score": 2
+                    },
+                    "player2": {
+                        "national_player_number": "rb56884",
+                        "name": "Petit",
+                        "first_name": "Léo",
+                        "birthday": "14/02/1985",
+                        "score": 4
                     },
                     "result": [
                         [
