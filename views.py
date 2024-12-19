@@ -770,8 +770,7 @@ class DataBaseView:
         self.display_players_score(
             self.data_base.sort_players(
                 tournament.players,
-                "score",
-                True
+                "name",
             ),
             "listes des joueurs participants"
         )
