@@ -810,9 +810,9 @@ class DataBaseView:
 
             print(apply_rich_style(
                 f"Cette ronde a commencé à {start_time} {end_sentence}",
-                                   TEXT_STYLE
-                                   )
-                  )
+                TEXT_STYLE
+                )
+            )
         input("")
 
 
