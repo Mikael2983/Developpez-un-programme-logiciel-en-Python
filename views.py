@@ -812,6 +812,7 @@ class DataBaseView:
                 TEXT_STYLE
                 )
             )
+
         input("")
 
 
