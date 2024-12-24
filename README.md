@@ -61,8 +61,8 @@ Modules Python listés dans requirements.txt
 
 - Tournois : Également stockés en JSON, chaque tournoi contient :
   - Nom, 
-  - lieu, 
-  - dates de début et fin
+  - Lieu, 
+  - Dates de début et fin
   - Nombre de tours (par défaut : 4)
   - Liste des joueurs inscrits
   - Liste des tours avec leurs matchs et scores
