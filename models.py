@@ -324,7 +324,7 @@ class Round:
             self.players = players
         else:
             self.players = DataBase().sort_players(
-                players, "score"
+                players, "score", True
             )
         self.matches = []
 
@@ -376,7 +376,7 @@ class Round:
                 if attempt == 1:
                     self.players = DataBase().sort_players(
                         self.players,
-                        "score", True
+                        "score"
                     )
                     continue
                 elif attempt == 2:
