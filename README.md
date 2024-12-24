@@ -75,7 +75,8 @@ Pour générer ce rapport :
    ```bash
    flake8 --format=html --htmldir=reports settings.py controllers.py models.py views.py main.py
 ```
-le rapport est visible dans le dossier reports
+[Voir le rapport](reports/index.html)
+
 
 ## Fonctionnement
 
