@@ -12,7 +12,8 @@ from settings import (TITLE_STYLE,
                       SUCCESS_STYLE,
                       TEXT_STYLE,
                       REQUEST_STYLE,
-                      INFORMATION_STYLE)
+                      INFORMATION_STYLE,
+                      ACTUAL_YEAR)
 
 
 class TournamentView:
@@ -436,24 +437,22 @@ class DataBaseView:
         :param national_player_number: The national player number to validate,
                                         expected in the format 'aa11111'.
         :type national_player_number: str
-        :raises ValueError: If the input does not match the expected format
-                            (two lowercase letters followed by five digits).
         :return: The validated national player number in lowercase format.
         :rtype: str
         """
         player_number = national_player_number.lower()
-        try:
-            if re.match(r"^[a-z]{2}\d{5}$", player_number):
-                return player_number
-            raise ValueError(
-                f"Le numéro {apply_rich_style(national_player_number,
+        if re.match(r"^[a-z]{2}\d{5}$", player_number):
+            return player_number
+        else:
+            error_message = (
+                f"Le numéro {apply_rich_style(national_player_number, 
                                               TEXT_STYLE)}"
-                f" n'est pas valide."
+                "n'est pas valide."
                 "Il doit être sous la forme de deux lettres minuscules "
                 "suivies de 5 chiffres."
             )
-        except ValueError as e:
-            print(apply_rich_style(str(e), ERROR_STYLE))
+
+            print(apply_rich_style(str(error_message), ERROR_STYLE))
             corrected = self.console.input(
                 apply_rich_style(
                     "Veuillez entrer un numéro valide. ex: aa11111 :",
@@ -485,9 +484,9 @@ class DataBaseView:
 
                 day = day.zfill(2)
                 month = month.zfill(2)
-                if len(year) == 2:
+                if len(year) < 3:
                     year = int(year)
-                    if year > 25:
+                    if year > ACTUAL_YEAR:
                         year = f"19{year}"
                     elif 0 < year < 9:
                         year = f"200{year}"
