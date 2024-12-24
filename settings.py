@@ -1,5 +1,5 @@
-PLAYERS_FILE_PATH = "Data/players.json"
-TOURNAMENT_FILE_PATH = "Data/Tournaments/"
+PLAYERS_FILE_PATH = "data/players.json"
+TOURNAMENT_FILE_PATH = "data/Tournaments/"
 
 TITLE_STYLE = "bold blue"
 LINE_STYLE = "blue"
