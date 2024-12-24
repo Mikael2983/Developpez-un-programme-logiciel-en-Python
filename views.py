@@ -445,13 +445,12 @@ class DataBaseView:
             return player_number
         else:
             error_message = (
-                f"Le numéro {apply_rich_style(national_player_number, 
+                f"Le numéro {apply_rich_style(national_player_number,
                                               TEXT_STYLE)}"
                 "n'est pas valide."
                 "Il doit être sous la forme de deux lettres minuscules "
                 "suivies de 5 chiffres."
-            )
-
+                )
             print(apply_rich_style(str(error_message), ERROR_STYLE))
             corrected = self.console.input(
                 apply_rich_style(
