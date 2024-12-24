@@ -76,7 +76,7 @@ Pour générer ce rapport :
    flake8 --format=html --htmldir=reports settings.py controllers.py models.py views.py main.py
 ```
 [Voir le rapport](reports/index.html)
-
+![Capture d'écran de l'application](flake8_report.png)
 
 ## Fonctionnement
 
