@@ -253,6 +253,7 @@ class MainController:
 
                 if not player:
                     self.reload_data_base.create_new_player(player_number)
+                    tournament.add_player(player_number)
 
     @staticmethod
     def add_round_to_tournament(tournament: Tournament):
