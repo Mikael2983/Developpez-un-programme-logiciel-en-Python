@@ -335,8 +335,6 @@ class ReloadDataBase:
                     prompts the user to create a new player.
 
         The user is given an option to add more players or exit the function.
-
-        :raises FileNotFoundError: If the JSON file is not found.
         :raises json.JSONDecodeError: If the JSON file is malformed.
         """
         while True:

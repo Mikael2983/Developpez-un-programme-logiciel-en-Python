@@ -138,9 +138,6 @@ class Tournament:
         into a JSON file.
         The JSON file is saved in the directory `data/tournaments/`
         with the tournament name as the filename.
-
-        :raises FileNotFoundError: If the directory
-        `data/tournaments/` does not exist.
         """
         json_file = f"{TOURNAMENT_FILE_PATH}{self.name}.json"
         DataBase.check_existence_json_file(json_file)
@@ -425,7 +422,6 @@ class Match:
         :param players: A tuple containing two players participating
         in the match.
         :type players: tuple[Player]
-        :raises ValueError: If `players` does not contain exactly two elements.
         """
         self.number = int(match_number)
         self.player1 = players[0]
@@ -486,7 +482,6 @@ class DataBase:
             Must follow the format `r"^[a-z]{2}\\d{5}$"` (e.g., "fr12345").
         :type player_number: str
 
-        :raises FileNotFoundError: If the JSON file does not exist.
         :raises json.JSONDecodeError: If the JSON file is malformed.
 
         :return: A dictionary containing the player's data if found,
@@ -542,7 +537,6 @@ class DataBase:
 
         :return: A list of filenames in the "data/tournaments/" directory.
         :rtype: list[str]
-        :raises FileNotFoundError: If the directory does not exist.
         """
 
         if not os.path.exists(TOURNAMENT_FILE_PATH):
@@ -568,7 +562,6 @@ class DataBase:
         :return: A list of tournament data dictionaries matching the
                     specified criterion.
         :rtype: list[dict]
-        :raises json.JSONDecodeError: If a JSON file is poorly formatted.
         """
         tournaments_json_files = self.find_tournaments_in_file()
         find_tournament = []
