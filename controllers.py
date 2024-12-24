@@ -295,6 +295,7 @@ class MainController:
                     tournament.rounds[-1].ended()
                     break
 
+            self.application_view.clear_console()
             match_number = (self.tournament_view.display_select_results_menu(
                 tournament.rounds[-1],
                 match_without_result)

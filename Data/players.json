@@ -208,5 +208,12 @@
         "first_name": "Hugo",
         "birthday": "05/07/1999",
         "score": 0
+    },
+    {
+        "national_player_number": "ab12345",
+        "name": "Lefèvre",
+        "first_name": "Mathieu",
+        "birthday": "14/03/1992",
+        "score": 0
     }
 ]
