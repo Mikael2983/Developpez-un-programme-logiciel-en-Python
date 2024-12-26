@@ -35,7 +35,7 @@ Modules Python listés dans requirements.txt
 
 2. Accédez au dossier du projet :
    ```bash
-   cd '04-Développer un programme logiciel en python'
+   cd Developpez-un-programme-logiciel-en-Python
 
 3. Créez et activez un environnement virtuel (recommandé) :
    ```bash
